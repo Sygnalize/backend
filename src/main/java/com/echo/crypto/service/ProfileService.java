@@ -9,7 +9,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -34,7 +33,7 @@ public class ProfileService {
 
     public Profile findByEmail(String email) {
         return profileRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException(("Profile not found " + email)));
+                .orElseThrow(() -> new UsernameNotFoundException("User with this email not found"));
     }
 
     public Profile registerProfile(Profile profile) {

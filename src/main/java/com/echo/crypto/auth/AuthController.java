@@ -2,15 +2,15 @@ package com.echo.crypto.auth;
 
 import com.echo.crypto.dto.ProfileDto;
 import com.echo.crypto.entities.Profile;
+import com.echo.crypto.exception.InvalidPasswordException;
 import com.echo.crypto.mapper.ProfileMapper;
 import com.echo.crypto.service.ProfileService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,15 +45,10 @@ public class AuthController {
         String password = loginData.get("password");
 
         Profile profile = profileService.findByEmail(email);
-        if (profile == null) {
-            return ResponseEntity.status(401).body(Map.of("error", "Invalid credentials"));
-        }
 
         if (!passwordEncoder.matches(password, profile.getPassword())) {
-            return ResponseEntity.status(401).body(Map.of("error", "Invalid credentials"));
+            throw new InvalidPasswordException("Incorrect password");
         }
-
-        authManager.authenticate(new UsernamePasswordAuthenticationToken(profile.getUsername(), password));
 
         UserDetails user = userDetailsService.loadUserByUsername(profile.getUsername());
         String accessToken = jwtService.generateToken(user.getUsername(), 15 * 60 * 1000);  // 15 мин
