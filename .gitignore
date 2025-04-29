@@ -1,33 +1,56 @@
-HELP.md
-target/
-!.mvn/wrapper/maven-wrapper.jar
+# === BUILD SYSTEM ARTIFACTS ===
+/target/
+build/
+out/
+
+# Keep nested build folders for modules
+!**/src/main/**/build/
+!**/src/test/**/build/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
-### STS ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
+# === MAVEN WRAPPER (keep these in Git!) ===
+!.mvn/
+!.mvn/wrapper/maven-wrapper.jar
+!mvnw
+!mvnw.cmd
 
-### IntelliJ IDEA ###
-.idea
+# === SPRING BOOT CONFIG ===
+/src/main/resources/application.properties
+/src/main/resources/application.yml
+/src/main/resources/application-*.yml
+/src/main/resources/application-*.properties
+
+# === INTELLIJ IDEA ===
+.idea/
 *.iws
 *.iml
 *.ipr
 
-### NetBeans ###
+# === STS (Spring Tool Suite) ===
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings/
+.springBeans
+.sts4-cache/
+
+# === NETBEANS ===
 /nbproject/private/
 /nbbuild/
 /dist/
 /nbdist/
 /.nb-gradle/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
 
-### VS Code ###
+# === VSCODE ===
 .vscode/
+
+# === OS-SPECIFIC ===
+.DS_Store
+Thumbs.db
+
+# === LOGS, TEMP FILES ===
+*.log
+*.tmp
+*.swp
